@@ -1,0 +1,46 @@
+{
+  "name": "vtx-build",
+  "version": "1.0.0",
+  "description": "CLI de build standardisé pour projets WordPress",
+  "main": "bin/vtx-build.js",
+  "type": "module",
+  "bin": {
+    "vtx-build": "./bin/vtx-build.js"
+  },
+  "scripts": {},
+  "keywords": [
+    "wordpress",
+    "build",
+    "webpack",
+    "eslint",
+    "wp-scripts"
+  ],
+  "author": "Sariha Chabert",
+  "license": "MIT",
+  "dependencies": {
+    "@wordpress/dependency-extraction-webpack-plugin": "^6.22.0",
+    "@wordpress/scripts": "^30.15.0",
+    "assets-webpack-plugin": "^7.1.1",
+    "chalk": "^5.4.1",
+    "copy-webpack-plugin": "^13.0.0",
+    "glob": "^11.0.1",
+    "image-minimizer-webpack-plugin": "^4.1.3",
+    "imagemin": "^9.0.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-jpegtran": "^8.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "imagemin-svgo": "^11.0.1",
+    "mini-css-extract-plugin": "^2.9.2",
+    "po2json": "^0.4.5",
+    "webpack": "^5.99.6",
+    "webpack-remove-empty-scripts": "^1.0.4",
+    "webpackbar": "^7.0.0"
+  },
+  "devDependencies": {
+    "@wordpress/stylelint-config": "^23.14.0",
+    "imagemin-webp": "^8.0.0",
+    "resolve-url-loader": "^5.0.0",
+    "stylelint": "^16.18.0",
+    "stylelint-webpack-plugin": "^5.0.1"
+  }
+}
