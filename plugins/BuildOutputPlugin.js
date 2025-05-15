@@ -1,9 +1,5 @@
-//import _ from 'lodash';
 import chalk from 'chalk';
-//import Table from 'cli-table3';
-
 import * as readline from 'readline';
-//import stripAnsi from 'strip-ansi';
 
 import { formatSize } from 'webpack/lib/SizeFormatHelpers.js';
 const name = process.env.npm_package_name;
@@ -49,7 +45,7 @@ export default class BuildOutputPlugin {
         relatedAssets: this.options.showRelated,
       });
 
-      this.heading(`🌀 ${name} ${version}`);
+      this.heading(`🌀  ${name} ${version}`);
 
       if (data.assets.length) {
         console.log(
@@ -64,7 +60,7 @@ export default class BuildOutputPlugin {
 
         console.log(
           chalk.blue(
-            `💾 ${data.assets.length} assets for a total size of ${totalSize}`
+            `💾  ${data.assets.length} assets for a total size of ${totalSize} \n`
           )
         );
       }
@@ -78,7 +74,7 @@ export default class BuildOutputPlugin {
    */
   heading(text) {
     console.log();
-    console.log(chalk.bgBlue.white.bold(this.section(text)));
+    console.log(chalk.bgBlack.white.bold(this.section(text)));
     console.log();
   }
 
@@ -93,7 +89,7 @@ export default class BuildOutputPlugin {
 
     text = `${padding}${text}${padding}`;
 
-    const line = '─'.repeat(text.length);
+    const line = '─'.repeat(text.length - 1);
 
     return `${line}\n${text}\n${line}`;
   }

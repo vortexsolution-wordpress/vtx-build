@@ -1,7 +1,4 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-import { glob } from 'glob';
 
 import defaultConfig from '@wordpress/scripts/config/webpack.config.js';
 
@@ -18,12 +15,12 @@ import BuildOutputPlugin from '../plugins/BuildOutputPlugin.js';
 import WebpackPo2Json from '../plugins/WebpackPo2Json.js';
 import entries  from "./entries.js";
 import RtlCssPlugin from "@wordpress/scripts/plugins/rtlcss-webpack-plugin/index.js";
+import WebpackPo2Mo from "../plugins/WebpackPo2Mo.js";
 
 
 const __themePath = path.resolve(process.cwd());
 const isProduction = process.env.NODE_ENV === 'production';
 const outputDir = path.join(__themePath, './dist');
-
 
 let entry = entries;
 let copy = [{
@@ -52,6 +49,9 @@ plugins.push(
     dest: path.resolve(__themePath + '/lang' ),
     handle: 'vtx-js',
     domain: 'vtx',
+  }),
+  new WebpackPo2Mo({
+    src: path.resolve(__themePath + '/lang' )
   }),
   new CopyPlugin({
     patterns: copy,

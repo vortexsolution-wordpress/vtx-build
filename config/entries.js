@@ -1,5 +1,6 @@
 import path from 'path';
 import { glob } from 'glob';
+import {exit} from "@wordpress/scripts/utils/process.js";
 
 const entries = {};
 
@@ -16,19 +17,22 @@ const addFilesToEntry = (pattern, prefix) => {
   files.forEach((file) => {
     const name = generateEntryName(prefix, file);
     const fullPath = path.resolve(process.cwd(), file);
-    entries[name] = fullPath;
+    if(!entries[name]) {
+      entries[name] = [];
+    }
+    entries[name].push(fullPath);
   });
 };
 
 // Ajout des scripts globaux
-addFilesToEntry('assets/scripts/*.js', 'scripts');
+addFilesToEntry('assets/scripts/*.js', 'js');
 // Ajout des scripts des blocs
-addFilesToEntry('blocks/!(_*)/assets/*.js', 'scripts');
+addFilesToEntry('blocks/!(_*)/assets/*.js', 'js');
 
 // Ajout des styles globaux
-addFilesToEntry('assets/styles/*.scss', 'styles');
+addFilesToEntry('assets/styles/*.scss', 'css');
 // Ajout des styles des blocs
-addFilesToEntry('blocks/!(_*)/assets/*.scss', 'styles');
+addFilesToEntry('blocks/!(_*)/assets/*.scss', 'css');
 
 
 // Sécurité : vérifier qu'on a bien des entrées

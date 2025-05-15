@@ -1,34 +1,29 @@
 #!/usr/bin/env node
-import { spawn } from 'child_process';
+import { getNodeArgsFromCLI, spawnScript } from '@wordpress/scripts/utils/index.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Path vers le webpack.config.js du package vtx-build
+// Chemin vers le répertoire node_modules de vtx-build
+const modulePath = path.resolve(__dirname, '../node_modules');
+
+// Définir NODE_PATH pour aider à résoudre les modules
+process.env.NODE_PATH = process.env.NODE_PATH
+  ? `${process.env.NODE_PATH}${path.delimiter}${modulePath}`
+  : modulePath;
+
+
+require('module').Module._initPaths();
+
 const customWebpackConfigPath = path.resolve(__dirname, '../config/webpack.config.js');
+const customWebpackConfig = path.relative(process.cwd(), customWebpackConfigPath);
 
-// Arguments passés au script, ex: ["build"]
-const cliArgs = process.argv.slice(2);
+const { scriptName, scriptArgs, nodeArgs } = getNodeArgsFromCLI();
 
-// On sépare la commande principale (build, start, etc.) des autres arguments
-const command = cliArgs[0] || 'build';
-const restArgs = cliArgs.slice(1);
+scriptArgs.push('--config', customWebpackConfig);
 
-// On construit le tableau d'arguments en plaçant --config après la commande
-const finalArgs = ['@wordpress/scripts', command];
-
-// Si --config n'est PAS déjà présent, on l'ajoute
-if (!restArgs.includes('--config')) {
-  finalArgs.push('--config', customWebpackConfigPath);
-} else {
-  // On récupère l'index et on ajoute les arguments tels quels
-  const configIndex = restArgs.indexOf('--config');
-  finalArgs.push(...restArgs);
-}
-
-spawn('npx', finalArgs, {
-  stdio: 'inherit',
-  shell: true,
-});
+spawnScript(scriptName, scriptArgs, nodeArgs);

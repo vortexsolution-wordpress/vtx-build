@@ -18,11 +18,14 @@
   "author": "Sariha Chabert",
   "license": "MIT",
   "dependencies": {
+    "@wordpress/browserslist-config": "^6.23.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^6.22.0",
     "@wordpress/scripts": "^30.15.0",
     "assets-webpack-plugin": "^7.1.1",
+    "browserslist": "^4.24.5",
     "chalk": "^5.4.1",
     "copy-webpack-plugin": "^13.0.0",
+    "gettext-parser": "^8.0.0",
     "glob": "^11.0.1",
     "image-minimizer-webpack-plugin": "^4.1.3",
     "imagemin": "^9.0.1",
@@ -32,6 +35,8 @@
     "imagemin-svgo": "^11.0.1",
     "mini-css-extract-plugin": "^2.9.2",
     "po2json": "^0.4.5",
+    "po2mo": "^2.0.7",
+    "shelljs": "^0.10.0",
     "webpack": "^5.99.6",
     "webpack-remove-empty-scripts": "^1.0.4",
     "webpackbar": "^7.0.0"
