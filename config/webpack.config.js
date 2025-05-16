@@ -16,11 +16,23 @@ import WebpackPo2Json from '../plugins/WebpackPo2Json.js';
 import entries  from "./entries.js";
 import RtlCssPlugin from "@wordpress/scripts/plugins/rtlcss-webpack-plugin/index.js";
 import WebpackPo2Mo from "../plugins/WebpackPo2Mo.js";
+import { createRequire } from 'module';
 
 
 const __themePath = path.resolve(process.cwd());
 const isProduction = process.env.NODE_ENV === 'production';
 const outputDir = path.join(__themePath, './dist');
+
+// Create a require function for the current module
+const require = createRequire(import.meta.url);
+
+// Read the package.json from the current working directory
+let projectPackageJson = {};
+try {
+  projectPackageJson = require(path.join(process.cwd(), 'package.json'));
+} catch (e) {
+  console.warn('[vtx-build] ⚠️ Could not read package.json from the current working directory.');
+}
 
 let entry = entries;
 let copy = [{
@@ -204,22 +216,5 @@ export default {
         },
       },
     ],
-  },
-  devServer: {
-    devMiddleware: {
-      writeToDisk: true,
-    },
-    allowedHosts: 'auto',
-    compress: true,
-    historyApiFallback: true,
-    hot: true,
-    proxy: {
-      '**': {
-        target: 'http://themeinterne.vtx/',
-        secure: true,
-        changeOrigin: true,
-        path: /./,
-      },
-    },
-  },
+  }
 };

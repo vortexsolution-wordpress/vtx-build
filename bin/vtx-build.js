@@ -24,6 +24,8 @@ const customWebpackConfig = path.relative(process.cwd(), customWebpackConfigPath
 
 const { scriptName, scriptArgs, nodeArgs } = getNodeArgsFromCLI();
 
-scriptArgs.push('--config', customWebpackConfig);
+if (scriptName === 'build') {
+  scriptArgs.push('--config', customWebpackConfig);
+}
 
 spawnScript(scriptName, scriptArgs, nodeArgs);
