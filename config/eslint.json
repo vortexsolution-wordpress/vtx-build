@@ -1,0 +1,64 @@
+{
+  "root": true,
+  "globals": {
+    "wp": true
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "amd": true,
+    "browser": true,
+    "jquery": true
+  },
+  "extends": [
+    "plugin:@wordpress/eslint-plugin/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "globalReturn": true,
+      "generators": false,
+      "objectLiteralDuplicateProperties": false,
+      "jsx": true
+    },
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "import",
+    "react",
+    "prettier"
+  ],
+  "settings": {
+    "import/core-modules": [],
+    "import/ignore": [
+      "node_modules",
+      "\\.(coffee|scss|css|less|hbs|svg|json)$"
+    ]
+  },
+  "rules": {
+    "prettier/prettier": ["error", {
+      "useTabs": false,
+      "tabWidth": 2,
+      "singleQuote": true,
+      "trailingComma": "es5",
+      "semi": true,
+      "bracketSpacing": true,
+      "parenSpacing": false
+    }],
+    "indent": [
+      "warn",
+      2
+    ],
+    "no-console": "off",
+    "import/no-unresolved": [
+      2,
+      {
+        "ignore": [
+          "swiper",
+          "modernizr"
+        ]
+      }
+    ]
+  }
+}
