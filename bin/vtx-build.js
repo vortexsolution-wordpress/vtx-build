@@ -24,7 +24,8 @@ const customWebpackConfig = path.relative(process.cwd(), customWebpackConfigPath
 
 const { scriptName, scriptArgs, nodeArgs } = getNodeArgsFromCLI();
 
-if (scriptName === 'build') {
+
+if ( ['build', 'start'].includes(scriptName) ) {
   scriptArgs.push('--config', customWebpackConfig);
 }
 
