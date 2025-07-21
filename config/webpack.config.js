@@ -41,7 +41,15 @@ let copy = [{
     dot: false,
   },
   to: 'images', // Laravel mix will place this in 'public/img'
-}];
+},
+  {
+    from: 'assets/icomoon/default/fonts',
+    globOptions: {
+      dot: false,
+    },
+    to: 'fonts', // Laravel mix will place this in 'public/fonts'
+  }
+];
 
 /**
  * Webpack plugins
