@@ -43,11 +43,11 @@ let copy = [{
   to: 'images', // Laravel mix will place this in 'public/img'
 },
   {
-    from: 'assets/icomoon/default/fonts',
+    from: 'assets/icomoon/*/fonts/*',
     globOptions: {
       dot: false,
     },
-    to: 'fonts', // Laravel mix will place this in 'public/fonts'
+    to: 'fonts/[name][ext]'
   }
 ];
 
