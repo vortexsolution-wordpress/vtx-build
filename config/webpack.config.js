@@ -129,19 +129,21 @@ defaultConfig.optimization.minimizer.push(
 plugins.push(new BuildOutputPlugin({}));
 
 
-
 /**
  * Plugins overrides
  */
 defaultConfig.plugins.forEach((plugin, index) => {
-
 
   if (plugin instanceof MiniCSSExtractPlugin) {
     defaultConfig.plugins.splice(
       index,
       1,
       new MiniCSSExtractPlugin({
-        filename: isProduction ? '[name].[fullhash:8].css' : '[name].css',
+        filename: (pathData) => {
+          // suppress the prefix to keep the original name
+          const originalName = pathData.chunk.name.replace(/^(js|css)-/, '');
+          return isProduction ? `${originalName}.[fullhash:8].css` : `${originalName}.css`;
+        },
       })
     );
   }
@@ -158,11 +160,15 @@ defaultConfig.plugins.forEach((plugin, index) => {
           if (request === 'swiper') {
             return 'Swiper';
           }
+          // Return undefined for other requests to use the default behavior
+          return undefined;
         },
         requestToHandle(request) {
           if (request === 'Swiper') {
             return 'swiper';
           }
+          // Return undefined for other requests to use the default behavior
+          return undefined;
         },
       })
     );
@@ -187,7 +193,14 @@ export default {
   entry,
   output: {
     path: outputDir,
-    filename: isProduction ? '[name].[fullhash:8].js' : '[name].js',
+    filename: (pathData) => {
+      const chunkName = pathData.chunk.name;
+      if (chunkName.startsWith('css-')) {
+        return isProduction ? `${chunkName}.[fullhash:8].js` : `${chunkName}.js`;
+      }
+      const originalName = chunkName.replace(/^js-/, '');
+      return isProduction ? `${originalName}.[fullhash:8].js` : `${originalName}.js`;
+    },
   },
   plugins: [...defaultConfig.plugins, ...plugins],
   stats: { ...defaultConfig.stats, preset: 'errors-warnings' },
@@ -195,7 +208,6 @@ export default {
     ...defaultConfig.module,
     rules: [
       ...defaultConfig.module.rules.map(rule => {
-        // Vérifier si la règle concerne les fichiers sass/scss
         if (rule.test && '/\\.(sc|sa)ss$/' === rule.test.toString()) {
 
           rule.use.map( loader => {

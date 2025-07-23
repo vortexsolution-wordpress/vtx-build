@@ -1,13 +1,12 @@
 import path from 'path';
 import { glob } from 'glob';
-import {exit} from "@wordpress/scripts/utils/process.js";
 
 const entries = {};
 
 // Utilitaires pour générer les noms d'entrée propres
 const generateEntryName = (prefix, filePath) => {
   const parsed = path.parse(filePath);
-  return `${parsed.name}`;
+  return `${prefix}-${parsed.name}`; // Préfixe interne pour séparer les entrées
 };
 
 // Helper : ajouter des fichiers à entry
