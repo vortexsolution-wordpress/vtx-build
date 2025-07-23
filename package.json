@@ -1,6 +1,6 @@
 {
   "name": "vtx-build",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "CLI de build standardisé pour projets WordPress",
   "main": "bin/vtx-build.js",
   "type": "module",

@@ -7,12 +7,12 @@ import CopyPlugin from 'copy-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 
 import MiniCSSExtractPlugin from 'mini-css-extract-plugin';
-import RemoveEmptyScriptsPlugin from 'webpack-remove-empty-scripts';
 
 import AssetsPlugin from 'assets-webpack-plugin';
 
 import BuildOutputPlugin from '../plugins/BuildOutputPlugin.js';
 import WebpackPo2Json from '../plugins/WebpackPo2Json.js';
+import RemoveEmptyJsFilesPlugin from '../plugins/RemoveEmptyJsFilesPlugin.js';
 import entries  from "./entries.js";
 import RtlCssPlugin from "@wordpress/scripts/plugins/rtlcss-webpack-plugin/index.js";
 import WebpackPo2Mo from "../plugins/WebpackPo2Mo.js";
@@ -63,7 +63,7 @@ plugins.push(
     removeFullPathAutoPrefix: true,
     path: outputDir,
   }),
-  new RemoveEmptyScriptsPlugin(),
+  new RemoveEmptyJsFilesPlugin(),
   new WebpackPo2Json({
     src: path.resolve(__themePath + '/lang' ),
     dest: path.resolve(__themePath + '/lang' ),
@@ -158,11 +158,15 @@ defaultConfig.plugins.forEach((plugin, index) => {
           if (request === 'swiper') {
             return 'Swiper';
           }
+          // Return undefined for other requests to use the default behavior
+          return undefined;
         },
         requestToHandle(request) {
           if (request === 'Swiper') {
             return 'swiper';
           }
+          // Return undefined for other requests to use the default behavior
+          return undefined;
         },
       })
     );
@@ -195,7 +199,6 @@ export default {
     ...defaultConfig.module,
     rules: [
       ...defaultConfig.module.rules.map(rule => {
-        // Vérifier si la règle concerne les fichiers sass/scss
         if (rule.test && '/\\.(sc|sa)ss$/' === rule.test.toString()) {
 
           rule.use.map( loader => {

@@ -23,20 +23,19 @@ vtx-build start
 ```
 
 
-### Exemple de configuration
+# Development
 
-Voici un exemple de configuration dans le `package.json` de votre thème WordPress :
+## Configuration
+Utiliser npm link pour lier le package localement, ce qui permet de tester les modifications sans avoir à publier le package à chaque fois.
 
-```json
-{
-  "name": "mon-theme-wordpress",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "cross-env NODE_ENV=production vtx-build build",
-    "start": "cross-env NODE_ENV=development vtx-build start"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3",
-    "vtx-build": "^1.0.0"
-  }
-}
+```bash
+npm link
+```
+puis dans votre projet :
+
+```bash
+npm link vtx-build
+```
+
+## Mise à jour du package
+Modifiez le fichier `package.json` pour mettre à jour la version du package.
