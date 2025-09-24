@@ -46,10 +46,7 @@
       "bracketSpacing": true,
       "parenSpacing": false
     }],
-    "indent": [
-      "warn",
-      2
-    ],
+    "indent": "off",
     "no-console": "off",
     "import/no-unresolved": [
       2,
